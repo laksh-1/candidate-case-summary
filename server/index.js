@@ -14,7 +14,7 @@ const db = mysql.createPool({
 
 app.use(cors());
 app.use(express.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 // app.get("/", (req, res) => {
 //   const sqlInsert =
 //     "INSERT INTO user (username, gender) VALUES ('temp','male');";
