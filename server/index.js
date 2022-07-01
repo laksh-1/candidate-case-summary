@@ -5,6 +5,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 
 const app = express();
+const port = process.env.PORT || 5000;
 const db = mysql.createPool({
   host: "bnhiovial5cl0u3lc6zm-mysql.services.clever-cloud.com",
   user: "uzpj6ckvryhhrcwe",
@@ -23,6 +24,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //     res.send("index.js on server side!");
 //   });
 // });
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("build"));
+  app.get("*", (req, res) => {
+    res.send("server is running");
+  });
+}
 
 app.post("/api/insert", (req, res) => {
   const userName = req.body.userName;
@@ -116,6 +124,6 @@ app.post("/api/insert", (req, res) => {
   }
 });
 
-app.listen(5000, () => {
+app.listen(port, () => {
   console.log("running on port 5000!");
 });

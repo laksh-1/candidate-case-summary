@@ -165,17 +165,17 @@ function App() {
                   name="startDate"
                   required
                   onChange={(e) => handleFormChange(e, index)}
-                  value={form.duration}
+                  value={form.startDate}
                 />
                 <br />
                 <br />
                 <label>End date: </label>
                 <input
                   type="month"
-                  name="startDate"
+                  name="endDate"
                   required
                   onChange={(e) => handleFormChange(e, index)}
-                  value={form.duration}
+                  value={form.endDate}
                 />
                 <br />
                 <label>Profile: </label>
