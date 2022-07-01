@@ -13,10 +13,10 @@ function App() {
   const [academics, setAcademics] = useState("");
   const [others, setOthers] = useState("");
   const [handle, setHandle] = useState("");
-  const [offerInHand, setOfferInHand] = useState("");
+  const [offerInHand, setOfferInHand] = useState("No");
 
   const [formFields, setFormFields] = useState([
-    { work: "", profile: "", duration: "" },
+    { work: "", profile: "", startDate: "", endDate: "" },
   ]);
 
   const handleFormChange = (event, index) => {
@@ -28,8 +28,9 @@ function App() {
   const addFields = () => {
     let object = {
       work: "",
+      startDate: "",
+      endDate: "",
       profile: "",
-      duration: "",
     };
     setFormFields([...formFields, object]);
   };
@@ -65,6 +66,7 @@ function App() {
         <input
           type="text"
           name="userName"
+          required
           onChange={(e) => {
             setuserName(e.target.value);
           }}
@@ -132,14 +134,17 @@ function App() {
         />
       </div>
       <div>
-        <label>offer in hand (yes/no) :</label>
-        <input
-          type="text"
+        <label>offer in hand :</label> {" "}
+        <select
           name="offerInHand"
           onChange={(e) => {
             setOfferInHand(e.target.value);
           }}
-        />
+        >
+          <option value="No">No</option>
+          <option value="Yes">Yes</option>
+        </select>
+        <br />
       </div>
       <div>
         {formFields.map((form, index) => {
@@ -154,10 +159,21 @@ function App() {
                   value={form.work}
                 />
                 <br />
-                <label>Duration (MM/YYYY-MM/YYYY) : </label>
+                <label>Start date: </label>
                 <input
-                  type="text"
-                  name="duration"
+                  type="month"
+                  name="startDate"
+                  required
+                  onChange={(e) => handleFormChange(e, index)}
+                  value={form.duration}
+                />
+                <br />
+                <br />
+                <label>End date: </label>
+                <input
+                  type="month"
+                  name="startDate"
+                  required
                   onChange={(e) => handleFormChange(e, index)}
                   value={form.duration}
                 />
