@@ -46,6 +46,7 @@ app.post("/api/insert", (req, res) => {
   // console.log(formFields);
   // console.log(handle);
   // console.log(offerInHand);
+  let idOfCurrentInsert;
   const sqlInsert =
     "INSERT INTO users (userName, location , experience, salary,academics, technologies , handle, offerInHand) VALUES (?,?,?,?,?,?,?,?);";
   db.query(
@@ -61,67 +62,72 @@ app.post("/api/insert", (req, res) => {
       offerInHand,
     ],
     (err, result) => {
-      console.log(result);
+      console.log(result.insertId);
+      idOfCurrentInsert = result.insertId;
+      console.log("id =", idOfCurrentInsert);
+      if (formFields.length == 1) {
+        const sqlInsert =
+          "INSERT INTO work (id,company1, profile1 ,startDate1, endDate1) VALUES (?,?,?,?,?);";
+        db.query(
+          sqlInsert,
+          [
+            idOfCurrentInsert,
+            formFields[0].work,
+            formFields[0].profile,
+            formFields[0].startDate,
+            formFields[0].endDate,
+          ],
+          (err, result) => {
+            console.log(result);
+          }
+        );
+      } else if (formFields.length == 2) {
+        const sqlInsert =
+          "INSERT INTO work (id,company1, profile1 ,startDate1, endDate1,company2, profile2 ,startDate2, endDate2) VALUES (?,?,?,?,?,?,?,?,?);";
+        db.query(
+          sqlInsert,
+          [
+            idOfCurrentInsert,
+            formFields[0].work,
+            formFields[0].profile,
+            formFields[0].startDate,
+            formFields[0].endDate,
+            formFields[1].work,
+            formFields[1].profile,
+            formFields[1].startDate,
+            formFields[1].endDate,
+          ],
+          (err, result) => {
+            console.log(result);
+          }
+        );
+      } else {
+        const sqlInsert =
+          "INSERT INTO work (id,company1, profile1 ,startDate1, endDate1,company2, profile2 ,startDate2, endDate2,company3, profile3 ,startDate3, endDate3) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);";
+        db.query(
+          sqlInsert,
+          [
+            idOfCurrentInsert,
+            formFields[0].work,
+            formFields[0].profile,
+            formFields[0].startDate,
+            formFields[0].endDate,
+            formFields[1].work,
+            formFields[1].profile,
+            formFields[1].startDate,
+            formFields[1].endDate,
+            formFields[2].work,
+            formFields[2].profile,
+            formFields[2].startDate,
+            formFields[2].endDate,
+          ],
+          (err, result) => {
+            console.log(result);
+          }
+        );
+      }
     }
   );
-  if (formFields.length == 1) {
-    const sqlInsert =
-      "INSERT INTO work (company1, profile1 ,startDate1, endDate1) VALUES (?,?,?,?);";
-    db.query(
-      sqlInsert,
-      [
-        formFields[0].work,
-        formFields[0].profile,
-        formFields[0].startDate,
-        formFields[0].endDate,
-      ],
-      (err, result) => {
-        console.log(result);
-      }
-    );
-  } else if (formFields.length == 2) {
-    const sqlInsert =
-      "INSERT INTO work (company1, profile1 ,startDate1, endDate1,company2, profile2 ,startDate2, endDate2) VALUES (?,?,?,?,?,?,?,?);";
-    db.query(
-      sqlInsert,
-      [
-        formFields[0].work,
-        formFields[0].profile,
-        formFields[0].startDate,
-        formFields[0].endDate,
-        formFields[1].work,
-        formFields[1].profile,
-        formFields[1].startDate,
-        formFields[1].endDate,
-      ],
-      (err, result) => {
-        console.log(result);
-      }
-    );
-  } else {
-    const sqlInsert =
-      "INSERT INTO work (company1, profile1 ,startDate1, endDate1,company2, profile2 ,startDate2, endDate2,company3, profile3 ,startDate3, endDate3) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);";
-    db.query(
-      sqlInsert,
-      [
-        formFields[0].work,
-        formFields[0].profile,
-        formFields[0].startDate,
-        formFields[0].endDate,
-        formFields[1].work,
-        formFields[1].profile,
-        formFields[1].startDate,
-        formFields[1].endDate,
-        formFields[2].work,
-        formFields[2].profile,
-        formFields[2].startDate,
-        formFields[2].endDate,
-      ],
-      (err, result) => {
-        console.log(result);
-      }
-    );
-  }
 });
 
 app.listen(port, () => {
